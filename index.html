@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon_32-32.png">
+    <link href="https://fonts.googleapis.com/css?family=Advent+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Train Schedule</title>
+</head>
+<body>
+<div id="appContent">
+    <header>
+        <h1>Train Schedule</h1>
+        <h2>Choo Choo</h2>
+    </header>
+    <main>
+        <section>
+            <h2 class="sectionHeader">Train Schedule</h2>
+            <table class="table">
+                <thead class="tableHeaders">
+                <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (minutes)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
+                </tr>
+                </thead>
+                <tbody id="addedTrains">
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h2 class="sectionHeader">Add a Train</h2>
+            <form>
+                <label for="name">Train Name</label>
+                <input type="text" id="name">
+                <label for="destination">Destination</label>
+                <input type="text" id="destination">
+                <label for="firstTime">First Train Time (military HH:mm)</label>
+                <input type="text" id="firstTime">
+                <label for="frequency">Frequency (minutes)</label>
+                <input type="text" id="frequency">
+                <input id="createNew" type="submit" value="Add">
+            </form>
+        </section>
+    </main>
+</div>
+<footer>
+    <p>Created by Lexi Winstanley</p>
+    <p>June 2019</p>
+</footer>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script type="text/javascript" src="assets/javascript/trainApp.js"></script>
+</body>
+</html>
