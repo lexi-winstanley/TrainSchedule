@@ -17,7 +17,7 @@ function addNewTrain(event) {
     count++;
     let name = document.getElementById('name').value.trim();
     let destination = document.getElementById('destination').value.trim();
-    let firstTime = document.getElementById('firstTime').value.trim();
+    let firstTime = moment(document.getElementById('firstTime').value.trim(), 'HH:mm');
     let frequency = document.getElementById('frequency').value.trim();
     database.push().set({
         name: name,
@@ -43,11 +43,15 @@ database.on('child_added', function(snap) {
     let newDest = document.createElement('td');
     newDest.innerText = newTrain.destination;
     let newFreq = document.createElement('td');
-    newFreq.innerText = newTrain.frequency;
+    let storedFrequency = newTrain.frequency;
+    console.log(storedFrequency);
+    newFreq.innerText = storedFrequency;
     let nextTrain = document.createElement('td');
-    nextTrain.innerText = 'Calc';
+    let storedFirstTime = newTrain.firstTime;
+    console.log(storedFirstTime);
+    nextTrain.innerText = nextTrainTime(calcNextTrain(storedFirstTime, storedFrequency));
     let minAway = document.createElement('td');
-    minAway.innerText = 'Calc';
+    minAway.innerText = calcNextTrain(storedFirstTime, storedFrequency);
     newRow.appendChild(newName);
     newRow.appendChild(newDest);
     newRow.appendChild(newFreq);
@@ -56,6 +60,25 @@ database.on('child_added', function(snap) {
     document.getElementById('addedTrains').appendChild(newRow);
 });
 
+let calcNextTrain = function(storedFirstTime, storedFrequency) {
+    let currentTime = moment();
+    //console.log(moment(currentTime).format('HH:mm'));
+    let convertedFirstTime = moment(storedFirstTime, 'HH:mm').subtract(1, 'years');
+    //console.log(moment(convertedFirstTime).format('HH:mm'));
+    let difference = moment().diff(moment(convertedFirstTime), 'minutes');
+    //console.log(difference);
+    let timeRemainder = difference % storedFrequency;
+    //console.log(timeRemainder);
+    let minutesToNext = storedFrequency - timeRemainder;
+    console.log(minutesToNext);
+
+    return minutesToNext;
+};
+
+let nextTrainTime = function(minutes) {
+    let nextTime = moment().add(minutes, 'minutes');
+    return moment(nextTime).format('HH:mm');
+};
 
 
 document.getElementById('createNew').onclick = addNewTrain;
