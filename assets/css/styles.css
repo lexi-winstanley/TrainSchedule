@@ -1,3 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px 2px #495818;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-family: 'PT Sans Narrow', sans-serif;
+    background-color: #494949;
+}
+
+#appContent {
+    flex: 1;
+    background-image: url("../images/tracks.jpg");
+    background-size: cover;
+    display: flex;
+}
+
+footer {
+    flex: none;
+    background-color: #494949;
+    color: #dddddd;
+    padding: .75rem 0 1rem 0;
+}
+
+footer p {
+    padding: .25rem 1rem 0rem 1rem;
+}
+
+header {
+    background-color: #495818;
+    color: #dddddd;
+    flex: none;
+    padding: 1rem;
+}
+
+main {
+    padding: 2.25rem 3rem 4.25rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+section {
+    background-color: rgba(221,221,221, .75);
+    margin: 2rem 0 0 0;
+    padding: 0 1rem 1rem 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-family: 'PT Sans Narrow', sans-serif;
+    padding: 1rem 0;
+}
+
+.sectionHeader {
+    font-family: 'Oswald', sans-serif;
+}
+
+table {
+    text-align: left;
+}
+
+thead  tr {
+    background-color: rgba(73,88,24, .8);
+    color: #dddddd;
+}
+
+tr {
+    padding: .5rem;
+    background-color: rgba(255,255,255, .75);
+}
+
+th {
+    padding: .5rem;
+}
+
 .evenRow {
-    background-color: lightgrey;
+    background-color: rgba(73,73,73, .75);
+    color: #dddddd;
+}
+
+td {
+    padding: .5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: .5rem;
+    margin: .5rem 0;
+    background-color: rgba(255,255,255, .75);
+    border: none;
+    color: #495818;
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#createNew {
+    background-color: rgba(73,88,24, .8);
+    color: #dddddd;
+    width: 20%;
+    align-self: flex-end;
+    border: none;
+    font-family: 'Oswald', sans-serif;
+}
+
+@media screen and (max-width: 850px) {
+    #appContent {
+        flex-direction: column;
+    }
+    table {
+        width: 100%;
+    }
+    main {
+        padding: 0rem 2rem 2rem 2rem;
+    }
+    footer {
+        text-align: center;
+    }
+    #createNew {
+        align-self: center;
+    }
 }

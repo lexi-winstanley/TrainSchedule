@@ -11,13 +11,27 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 let database = firebase.database().ref();
 let count = 0;
+let timeInterval;
+let timeStart = 0;
+let countdownStarted = false;
+
+function timeToUpdate() {
+    timeInterval = setInterval(updateTimes, 60000);
+    countdownStarted = true;
+}
+
+function resetInterval() {
+    clearInterval(timeInterval);
+    timeStart = 0;
+    countdownStarted = false;
+}
 
 function addNewTrain(event) {
     event.preventDefault();
     count++;
     let name = document.getElementById('name').value.trim();
     let destination = document.getElementById('destination').value.trim();
-    let firstTime = moment(document.getElementById('firstTime').value.trim(), 'HH:mm');
+    let firstTime = document.getElementById('firstTime').value.trim();
     let frequency = document.getElementById('frequency').value.trim();
     database.push().set({
         name: name,
@@ -32,11 +46,34 @@ function addNewTrain(event) {
     document.getElementById('frequency').value = '';
 }
 
+function updateTimes() {
+    let allRows = document.getElementsByTagName('tr');
+    console.log(allRows);
+    for (let i = 1; i < allRows.length; i++) {
+        let currentRow = allRows[i];
+        let currentChildren = currentRow.getElementsByTagName('td');
+        let dataFirstTime = currentChildren[3].getAttribute('data-first');
+        console.log(dataFirstTime);
+        let dataFreq = currentChildren[2].getAttribute('data-freq');
+        console.log(dataFreq);
+        let convertedFirstTime = moment(dataFirstTime, 'HH:mm').subtract(1, 'years');
+        let difference = moment().diff(moment(convertedFirstTime), 'minutes');
+        let timeRemainder = difference % dataFreq;
+        let minutesToNext = dataFreq - timeRemainder;
+        let nextTime = moment().add(minutesToNext, 'minutes');
+        let displayTime = moment(nextTime).format('HH:mm');
+        currentChildren[4].innerText = minutesToNext;
+        currentChildren[3].innerText = displayTime;
+    }
+}
+
 database.on('child_added', function(snap) {
     let newTrain = snap.val();
+    console.log(newTrain);
     let newRow = document.createElement('tr');
+    newRow.className = 'trainRow';
     if (newTrain.order % 2 === 0) {
-        newRow.setAttribute('class', 'evenRow');
+        newRow.className = 'evenRow';
     }
     let newName = document.createElement('td');
     newName.innerText = newTrain.name;
@@ -45,40 +82,23 @@ database.on('child_added', function(snap) {
     let newFreq = document.createElement('td');
     let storedFrequency = newTrain.frequency;
     console.log(storedFrequency);
+    newFreq.setAttribute('data-freq', storedFrequency);
     newFreq.innerText = storedFrequency;
     let nextTrain = document.createElement('td');
     let storedFirstTime = newTrain.firstTime;
     console.log(storedFirstTime);
-    nextTrain.innerText = nextTrainTime(calcNextTrain(storedFirstTime, storedFrequency));
+    nextTrain.setAttribute('data-first', storedFirstTime);
     let minAway = document.createElement('td');
-    minAway.innerText = calcNextTrain(storedFirstTime, storedFrequency);
     newRow.appendChild(newName);
     newRow.appendChild(newDest);
     newRow.appendChild(newFreq);
     newRow.appendChild(nextTrain);
     newRow.appendChild(minAway);
     document.getElementById('addedTrains').appendChild(newRow);
+    updateTimes();
 });
 
-let calcNextTrain = function(storedFirstTime, storedFrequency) {
-    let currentTime = moment();
-    //console.log(moment(currentTime).format('HH:mm'));
-    let convertedFirstTime = moment(storedFirstTime, 'HH:mm').subtract(1, 'years');
-    //console.log(moment(convertedFirstTime).format('HH:mm'));
-    let difference = moment().diff(moment(convertedFirstTime), 'minutes');
-    //console.log(difference);
-    let timeRemainder = difference % storedFrequency;
-    //console.log(timeRemainder);
-    let minutesToNext = storedFrequency - timeRemainder;
-    console.log(minutesToNext);
-
-    return minutesToNext;
-};
-
-let nextTrainTime = function(minutes) {
-    let nextTime = moment().add(minutes, 'minutes');
-    return moment(nextTime).format('HH:mm');
-};
-
-
+resetInterval();
 document.getElementById('createNew').onclick = addNewTrain;
+timeToUpdate();
+
