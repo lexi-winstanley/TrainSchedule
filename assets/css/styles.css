@@ -145,3 +145,24 @@ input {
         align-self: center;
     }
 }
+
+@media screen and (max-width: 500px) {
+    main {
+        padding: 0rem 0 0rem 0;
+        background-color: rgba(221,221,221, .75);
+    }
+    section {
+        background-color: transparent;
+        margin: 0;
+        padding: 0rem 1rem 1rem 1rem;
+    }
+    .shortened {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    body {
+        font-size: 14px;
+    }
+}
