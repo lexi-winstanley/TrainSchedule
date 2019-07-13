@@ -10,7 +10,6 @@ let firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 let database = firebase.database().ref();
-let count = 0;
 let timeInterval;
 let timeStart = 0;
 let countdownStarted = false;
@@ -28,7 +27,8 @@ function resetInterval() {
 
 function addNewTrain(event) {
     event.preventDefault();
-    count++;
+    let count = document.getElementsByTagName('tr').length;
+    console.log(count);
     let name = document.getElementById('name').value.trim();
     let destination = document.getElementById('destination').value.trim();
     let firstTime = document.getElementById('firstTime').value.trim();

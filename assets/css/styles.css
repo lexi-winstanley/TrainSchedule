@@ -126,6 +126,7 @@ input {
     align-self: flex-end;
     border: none;
     font-family: 'Oswald', sans-serif;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 850px) {
