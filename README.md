@@ -11,7 +11,7 @@ This web application allows visitors to view a table with the names, destination
 Logic was written to capture user inputs and store them in Firebase database. A function is set to run on any changes to the database and then use values to calculate the minutes to next train arrival and next time arriving using the Moment.js library. These values are then dynamically displayed to the HTML in a table. 
 
 ## Role
-Sole developer responsible for design, code and creation of custom graphics. Functionality requirements provided by UW Coding Bootcamp/Trilogy Education Services.
+Sole developer responsible for design, code and creation of custom graphics.
 
 ## Technologies
 HTML
